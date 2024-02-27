@@ -1,0 +1,31 @@
+{
+    "name": "animetize",
+    "version": "0.0.1",
+    "main": "src/main.ts",
+    "scripts": {
+        "start": "ts-node src/main.ts",
+        "dev": "nodemon src/main.ts",
+        "build": "tsc",
+        "lint": "prettier --write \"src/**/*.ts\""
+    },
+    "dependencies": {
+        "@fastify/cors": "^8.2.0",
+        "@types/fastify-cors": "^2.1.0",
+        "@types/node": "^18.11.17",
+        "@types/ws": "^8.5.3",
+        "axios": "^1.0.0",
+        "chalk": "4.1.2",
+        "cheerio": "1.0.0-rc.12",
+        "dotenv": "^16.0.3",
+        "fastify": "^4.10.2",
+        "fastify-cors": "^6.1.0",
+        "ioredis": "^5.2.4",
+        "reconnecting-websocket": "^4.4.0",
+        "ws": "^8.8.1"
+    },
+    "devDependencies": {
+        "nodemon": "3.0.1",
+        "prettier": "^3.0.0",
+        "ts-node": "^10.9.2"
+    }
+}
