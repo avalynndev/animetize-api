@@ -1,5 +1,16 @@
-## Summary
+<!-- Thanks for submitting a pull request! Please provide enough information so that others can review your pull request. -->
 
-Describe your changes here.
+**What kind of change does this PR introduce?**
 
-Fixes #Issue_Number, dotnet/docs#Issue_Number or dotnet/dotnet-api-docs#Issue_Number (if available)
+<!-- E.g. a bugfix, new provider, refactoring, etc… -->
+
+**Did you add tests for your changes?**
+
+**If relevant, did you update the documentation?**
+
+**Summary**
+
+<!-- Explain the **motivation** for making this change. What existing problem does the pull request solve? -->
+<!-- Try to link to an open issue for more information. -->
+
+**Other information**

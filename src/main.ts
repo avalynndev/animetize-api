@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import FastifyCors from '@fastify/cors';
 
-//import anime from "./scrapper/anime";
+import anime from "./routes/anime/";
 //import manga from "./scrapper/manga";
 //import anilist from "./scrapper/anilist";
 import chalk from 'chalk';
@@ -23,10 +23,9 @@ const fastify = Fastify({
 
   console.log(chalk.green(`Starting server on port ${PORT}... 🚀`));
 
-  // Register the anime, manga, and anilist routes
-  // await fastify.register(anime, { prefix: "/anime" });
+  // Register the anime and manga routes
+  await fastify.register(anime, { prefix: "/anime" });
   // await fastify.register(manga, { prefix: "/manga" });
-  // await fastify.register(anilist, { prefix: "/anilist" });
 
   try {
     // Define the root route

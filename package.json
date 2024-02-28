@@ -13,14 +13,17 @@
         "@types/fastify-cors": "^2.1.0",
         "@types/node": "^18.11.17",
         "@types/ws": "^8.5.3",
+        "ascii-url-encoder": "^1.2.0",
         "axios": "^1.0.0",
         "chalk": "4.1.2",
         "cheerio": "1.0.0-rc.12",
+        "crypto-js": "^4.2.0",
         "dotenv": "^16.0.3",
         "fastify": "^4.10.2",
         "fastify-cors": "^6.1.0"
     },
     "devDependencies": {
+        "@types/crypto-js": "^4.2.2",
         "nodemon": "3.0.1",
         "prettier": "^3.0.0",
         "ts-node": "^10.9.2",
