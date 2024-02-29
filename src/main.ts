@@ -30,7 +30,7 @@ const fastify = Fastify({
   try {
     // Define the root route
     fastify.get('/', (_, rp) => {
-      rp.status(200).send(`Welcome to Animetize api! 🎉`);
+      rp.status(200).send(`Welcome to Animetize api! Documentation can be viewed at https://animetize-docs.vercel.app. 🎉`);
     });
 
     // Define the catch-all route for handling 404 errors
