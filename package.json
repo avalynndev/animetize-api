@@ -11,7 +11,7 @@
     "dependencies": {
         "@fastify/cors": "^8.2.0",
         "@types/fastify-cors": "^2.1.0",
-        "@types/node": "^18.11.17",
+        "@types/node": "^20.11.30",
         "@types/ws": "^8.5.3",
         "ascii-url-encoder": "^1.2.0",
         "axios": "^1.0.0",
