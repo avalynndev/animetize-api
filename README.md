@@ -1,7 +1,7 @@
 ![bannner.png](https://raw.githubusercontent.com/animetize/animetize-api/main/Animetize_banner.png)
 -------
 <p align="center">
-  An API to effortlessly access information on anime manga to empower your applications with streamlined data retrieval.
+  An API to effortlessly access information on anime/manga to empower your applications with streamlined data retrieval.
 </p>
 
 <h2> Table of Contents </h2>
