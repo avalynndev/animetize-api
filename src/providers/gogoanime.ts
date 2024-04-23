@@ -1,4 +1,3 @@
-import { AxiosAdapter } from 'axios';
 import { load } from 'cheerio';
 
 import {
@@ -12,9 +11,8 @@ import {
   IAnimeResult,
   ISource,
   MediaFormat,
-} from '../../models';
-import { USER_AGENT } from '../../utils';
-import { GogoCDN, StreamSB } from '../../extractors';
+} from '../models';
+import { GogoCDN, StreamSB } from '../extractors';
 
 class Gogoanime extends AnimeParser {
   override readonly name = 'Gogoanime';
@@ -29,7 +27,10 @@ class Gogoanime extends AnimeParser {
    * @param query search query string
    * @param page page number (default 1) (optional)
    */
-  override search = async (query: string, page: number = 1): Promise<ISearch<IAnimeResult>> => {
+  override search = async (
+    query: string,
+    page: number = 1,
+  ): Promise<ISearch<IAnimeResult>> => {
     const searchResult: ISearch<IAnimeResult> = {
       currentPage: page,
       hasNextPage: false,
@@ -37,7 +38,7 @@ class Gogoanime extends AnimeParser {
     };
     try {
       const res = await this.client.get(
-        `${this.baseUrl}/filter.html?keyword=${encodeURIComponent(query)}&page=${page}`
+        `${this.baseUrl}/filter.html?keyword=${encodeURIComponent(query)}&page=${page}`,
       );
 
       const $ = load(res.data);
@@ -85,7 +86,7 @@ class Gogoanime extends AnimeParser {
 
       animeInfo.id = new URL(id).pathname.split('/')[2];
       animeInfo.title = $(
-        'section.content_left > div.main_body > div:nth-child(2) > div.anime_info_body_bg > h1'
+        'section.content_left > div.main_body > div:nth-child(2) > div.anime_info_body_bg > h1',
       )
         .text()
         .trim();
@@ -100,7 +101,9 @@ class Gogoanime extends AnimeParser {
         .trim()
         .replace('Plot Summary: ', '');
 
-      animeInfo.subOrDub = animeInfo.title.toLowerCase().includes('dub') ? SubOrSub.DUB : SubOrSub.SUB;
+      animeInfo.subOrDub = animeInfo.title.toLowerCase().includes('dub')
+        ? SubOrSub.DUB
+        : SubOrSub.SUB;
 
       animeInfo.type = $('div.anime_info_body_bg > p:nth-child(4) > a')
         .text()
@@ -138,8 +141,7 @@ class Gogoanime extends AnimeParser {
       const alias = $('#alias_anime').attr('value');
 
       const html = await this.client.get(
-        `${this.ajaxUrl
-        }/load-list-episode?ep_start=${ep_start}&ep_end=${ep_end}&id=${movie_id}&default_ep=${0}&alias=${alias}`
+        `${this.ajaxUrl}/load-list-episode?ep_start=${ep_start}&ep_end=${ep_end}&id=${movie_id}&default_ep=${0}&alias=${alias}`,
       );
       const $$ = load(html.data);
 
@@ -168,7 +170,7 @@ class Gogoanime extends AnimeParser {
    */
   override fetchEpisodeSources = async (
     episodeId: string,
-    server: StreamingServers = StreamingServers.VidStreaming
+    server: StreamingServers = StreamingServers.VidStreaming,
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       const serverUrl = new URL(episodeId);
@@ -184,9 +186,12 @@ class Gogoanime extends AnimeParser {
             headers: {
               Referer: serverUrl.href,
               watchsb: 'streamsb',
-              'User-Agent': USER_AGENT,
+              'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
             },
-            sources: await new StreamSB(this.proxyConfig, this.adapter).extract(serverUrl),
+            sources: await new StreamSB(this.proxyConfig, this.adapter).extract(
+              serverUrl,
+            ),
             download: `https://gogohd.net/download${serverUrl.search}`,
           };
         default:
@@ -211,12 +216,14 @@ class Gogoanime extends AnimeParser {
           break;
         case StreamingServers.VidStreaming:
           serverUrl = new URL(
-            `${$('div.anime_video_body > div.anime_muti_link > ul > li.vidcdn > a').attr('data-video')}`
+            `${$('div.anime_video_body > div.anime_muti_link > ul > li.vidcdn > a').attr('data-video')}`,
           );
           break;
         case StreamingServers.StreamSB:
           serverUrl = new URL(
-            $('div.anime_video_body > div.anime_muti_link > ul > li.streamsb > a').attr('data-video')!
+            $('div.anime_video_body > div.anime_muti_link > ul > li.streamsb > a').attr(
+              'data-video',
+            )!,
           );
           break;
         default:
@@ -274,7 +281,7 @@ class Gogoanime extends AnimeParser {
 
       return (
         $(
-          '#wrapper_bg > section > section.content_left > div:nth-child(1) > div.anime_video_body > div.anime_video_body_cate > div.anime-info > a'
+          '#wrapper_bg > section > section.content_left > div:nth-child(1) > div.anime_video_body > div.anime_video_body_cate > div.anime-info > a',
         ).attr('href') as string
       ).split('/')[2];
     } catch (err) {
@@ -285,9 +292,14 @@ class Gogoanime extends AnimeParser {
    * @param page page number (optional)
    * @param type type of media. (optional) (default `1`) `1`: Japanese with subtitles, `2`: english/dub with no subtitles, `3`: chinese with english subtitles
    */
-  fetchRecentEpisodes = async (page: number = 1, type: number = 1): Promise<ISearch<IAnimeResult>> => {
+  fetchRecentEpisodes = async (
+    page: number = 1,
+    type: number = 1,
+  ): Promise<ISearch<IAnimeResult>> => {
     try {
-      const res = await this.client.get(`${this.ajaxUrl}/page-recent-release.html?page=${page}&type=${type}`);
+      const res = await this.client.get(
+        `${this.ajaxUrl}/page-recent-release.html?page=${page}&type=${type}`,
+      );
 
       const $ = load(res.data);
 
@@ -297,14 +309,18 @@ class Gogoanime extends AnimeParser {
         recentEpisodes.push({
           id: $(el).find('a').attr('href')?.split('/')[1]?.split('-episode')[0]!,
           episodeId: $(el).find('a').attr('href')?.split('/')[1]!,
-          episodeNumber: parseFloat($(el).find('p.episode').text().replace('Episode ', '')),
+          episodeNumber: parseFloat(
+            $(el).find('p.episode').text().replace('Episode ', ''),
+          ),
           title: $(el).find('p.name > a').attr('title')!,
           image: $(el).find('div > a > img').attr('src'),
           url: `${this.baseUrl}${$(el).find('a').attr('href')?.trim()}`,
         });
       });
 
-      const hasNextPage = !$('div.anime_name_pagination.intro > div > ul > li').last().hasClass('selected');
+      const hasNextPage = !$('div.anime_name_pagination.intro > div > ul > li')
+        .last()
+        .hasClass('selected');
 
       return {
         currentPage: page,
@@ -316,7 +332,10 @@ class Gogoanime extends AnimeParser {
     }
   };
 
-  fetchGenreInfo = async (genre: string, page: number = 1): Promise<ISearch<IAnimeResult>> => {
+  fetchGenreInfo = async (
+    genre: string,
+    page: number = 1,
+  ): Promise<ISearch<IAnimeResult>> => {
     try {
       const res = await this.client.get(`${this.baseUrl}/genre/${genre}?page=${page}`);
 
@@ -335,7 +354,8 @@ class Gogoanime extends AnimeParser {
       });
 
       const paginatorDom = $('div.anime_name_pagination > div > ul > li');
-      const hasNextPage = paginatorDom.length > 0 && !paginatorDom.last().hasClass('selected');
+      const hasNextPage =
+        paginatorDom.length > 0 && !paginatorDom.last().hasClass('selected');
       return {
         currentPage: page,
         hasNextPage: hasNextPage,
@@ -348,7 +368,9 @@ class Gogoanime extends AnimeParser {
 
   fetchTopAiring = async (page: number = 1): Promise<ISearch<IAnimeResult>> => {
     try {
-      const res = await this.client.get(`${this.ajaxUrl}/page-recent-release-ongoing.html?page=${page}`);
+      const res = await this.client.get(
+        `${this.ajaxUrl}/page-recent-release-ongoing.html?page=${page}`,
+      );
 
       const $ = load(res.data);
 
@@ -358,7 +380,10 @@ class Gogoanime extends AnimeParser {
         topAiring.push({
           id: $(el).find('a:nth-child(1)').attr('href')?.split('/')[2]!,
           title: $(el).find('a:nth-child(1)').attr('title')!,
-          image: $(el).find('a:nth-child(1) > div').attr('style')?.match('(https?://.*.(?:png|jpg))')![0],
+          image: $(el)
+            .find('a:nth-child(1) > div')
+            .attr('style')
+            ?.match('(https?://.*.(?:png|jpg))')![0],
           url: `${this.baseUrl}${$(el).find('a:nth-child(1)').attr('href')}`,
           genres: $(el)
             .find('p.genres > a')
@@ -367,7 +392,9 @@ class Gogoanime extends AnimeParser {
         });
       });
 
-      const hasNextPage = !$('div.anime_name.comedy > div > div > ul > li').last().hasClass('selected');
+      const hasNextPage = !$('div.anime_name.comedy > div > div > ul > li')
+        .last()
+        .hasClass('selected');
 
       return {
         currentPage: page,
@@ -381,7 +408,9 @@ class Gogoanime extends AnimeParser {
 
   fetchRecentMovies = async (page: number = 1): Promise<ISearch<IAnimeResult>> => {
     try {
-      const res = await this.client.get(`${this.baseUrl}/anime-movies.html?aph&page=${page}`);
+      const res = await this.client.get(
+        `${this.baseUrl}/anime-movies.html?aph&page=${page}`,
+      );
 
       const $ = load(res.data);
 
@@ -401,7 +430,9 @@ class Gogoanime extends AnimeParser {
         });
       });
 
-      const hasNextPage = !$('div.anime_name.anime_movies > div > div > ul > li').last().hasClass('selected');
+      const hasNextPage = !$('div.anime_name.anime_movies > div > div > ul > li')
+        .last()
+        .hasClass('selected');
 
       return {
         currentPage: page,
@@ -436,7 +467,9 @@ class Gogoanime extends AnimeParser {
         });
       });
 
-      const hasNextPage = !$('div.anime_name.anime_movies > div > div > ul > li').last().hasClass('selected');
+      const hasNextPage = !$('div.anime_name.anime_movies > div > div > ul > li')
+        .last()
+        .hasClass('selected');
 
       return {
         currentPage: page,
@@ -449,7 +482,9 @@ class Gogoanime extends AnimeParser {
     }
   };
 
-  fetchGenreList = async (): Promise<{ id: string | undefined; title: string | undefined }[]> => {
+  fetchGenreList = async (): Promise<
+    { id: string | undefined; title: string | undefined }[]
+  > => {
     const genres: { id: string | undefined; title: string | undefined }[] = [];
     let res = null;
     try {
@@ -465,7 +500,9 @@ class Gogoanime extends AnimeParser {
       const $ = load(res.data);
       $('nav.menu_series.genre.right > ul > li').each((_index, element) => {
         const genre = $(element).find('a');
-        genres.push({ id: genre.attr('href')?.replace('/genre/', ''), title: genre.attr('title') }!);
+        genres.push(
+          { id: genre.attr('href')?.replace('/genre/', ''), title: genre.attr('title') }!,
+        );
       });
       return genres;
     } catch (err) {
@@ -482,16 +519,16 @@ class Gogoanime extends AnimeParser {
       $('.anime_list_body .listing li').each((_index, element) => {
         const img = $('div', $(element).attr('title')!);
         const a = $(element).find('a');
-        animeList.push(
-          {
-            id: a.attr('href')?.replace(`/category/`, '')!,
-            title: a.text(),
-            image: $(img).find('img').attr('src'),
-            url: `${this.baseUrl}${a.attr('href')}`,
-          }
-        );
+        animeList.push({
+          id: a.attr('href')?.replace(`/category/`, '')!,
+          title: a.text(),
+          image: $(img).find('img').attr('src'),
+          url: `${this.baseUrl}${a.attr('href')}`,
+        });
       });
-      const hasNextPage = !$('div.anime_name.anime_list > div > div > ul > li').last().hasClass('selected');
+      const hasNextPage = !$('div.anime_name.anime_list > div > div > ul > li')
+        .last()
+        .hasClass('selected');
       return {
         currentPage: page,
         hasNextPage: hasNextPage,

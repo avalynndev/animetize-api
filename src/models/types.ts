@@ -163,7 +163,6 @@ export interface IVideo {
 export enum StreamingServers {
   GogoCDN = 'gogocdn',
   StreamSB = 'streamsb',
-  VidCloud = 'vidcloud',
   StreamTape = 'streamtape',
   // same as vizcloud
   VidStreaming = 'vidstreaming',
@@ -184,17 +183,6 @@ export enum SubOrSub {
   BOTH = 'both',
 }
 
-export interface IMangaResult {
-  id: string;
-  title: string | [lang: string][] | ITitle;
-  altTitles?: string | string[] | [lang: string][];
-  image?: string;
-  description?: string | [lang: string][] | { [lang: string]: string };
-  status?: MediaStatus;
-  releaseDate?: number | string;
-  [x: string]: unknown; // other fields
-}
-
 export interface IMangaChapter {
   id: string;
   title: string;
@@ -202,16 +190,6 @@ export interface IMangaChapter {
   pages?: number;
   releaseDate?: string;
   [x: string]: unknown; // other fields
-}
-
-export interface IMangaInfo extends IMangaResult {
-  malId?: number | string;
-  authors?: string[];
-  genres?: string[];
-  links?: string[];
-  characters?: any[];
-  recommendations?: IMangaResult[];
-  chapters?: IMangaChapter[];
 }
 
 export interface IMangaChapterPage {

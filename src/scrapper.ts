@@ -1,11 +1,6 @@
-import { ANIME, MANGA } from './providers';
-import { PROVIDERS_LIST } from './utils/providers-list';
 import {
   GogoCDN,
-  RapidCloud,
   StreamSB,
-  StreamTape,
-  VidCloud,
 } from './extractors';
 import {
   IProviderStats,
@@ -18,9 +13,7 @@ import {
   StreamingServers,
   MediaStatus,
   SubOrSub,
-  IMangaResult,
   IMangaChapter,
-  IMangaInfo,
   IMangaChapterPage,
   ISource,
   ISubtitle,
@@ -32,8 +25,6 @@ import {
   ProxyConfig,
 } from './models';
 
-export { ANIME, MANGA };
-export { PROVIDERS_LIST };
 export {
   Genres,
   SubOrSub,
@@ -45,9 +36,7 @@ export {
   IAnimeResult,
   IEpisodeServer,
   IVideo,
-  IMangaResult,
   IMangaChapter,
-  IMangaInfo,
   ISearch,
   IMangaChapterPage,
   ISource,
@@ -59,7 +48,4 @@ export {
   ProxyConfig,
   GogoCDN,
   StreamSB,
-  VidCloud,
-  RapidCloud,
-  StreamTape,
 };

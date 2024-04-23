@@ -1,8 +1,7 @@
 import { CheerioAPI, load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
-import { VideoExtractor, IVideo, ProxyConfig } from '../models';
-import { USER_AGENT } from '../utils';
+import { VideoExtractor, IVideo } from '../models';
 
 class GogoCDN extends VideoExtractor {
   protected override serverName = 'goload';
@@ -83,7 +82,8 @@ class GogoCDN extends VideoExtractor {
         .get(source.file, {
           headers: {
             Referer: this.referer,
-            'User-Agent': USER_AGENT,
+            'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
           },
         })
         .catch(() => null);

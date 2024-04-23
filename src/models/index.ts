@@ -2,7 +2,7 @@ import BaseProvider from './base-provider';
 import BaseParser from './base-parser';
 import AnimeParser from './anime-parser';
 import VideoExtractor from './video-extractor';
-import MangaParser from './manga-parser';
+
 import {
   IProviderStats,
   ISearch,
@@ -14,9 +14,7 @@ import {
   StreamingServers,
   MediaStatus,
   SubOrSub,
-  IMangaResult,
   IMangaChapter,
-  IMangaInfo,
   IMangaChapterPage,
   ISource,
   ISubtitle,
@@ -41,10 +39,7 @@ export {
   StreamingServers,
   MediaStatus,
   SubOrSub,
-  MangaParser,
-  IMangaResult,
   IMangaChapter,
-  IMangaInfo,
   ISearch,
   IMangaChapterPage,
   ISource,

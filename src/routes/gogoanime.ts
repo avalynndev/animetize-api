@@ -1,14 +1,14 @@
 import { FastifyRequest, FastifyReply, FastifyInstance, RegisterOptions } from 'fastify';
-import { ANIME } from '../../scrapper';
-import { StreamingServers } from '../../models';
+import Gogoanime from '../providers/gogoanime';
+import { StreamingServers } from '../models';
 
 const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
-  const gogoanime = new ANIME.Gogoanime();
+  const gogoanime = new Gogoanime();
 
   fastify.get('/', (_, rp) => {
     rp.status(200).send({
       intro:
-        "Welcome to the gogoanime provider: check out the provider's website @ https://www1.gogoanime.bid/",
+        "Welcome to the animetize-api 🎉.",
       routes: [
         '/:query',
         '/info/:id',
@@ -22,7 +22,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
         '/recent-episodes',
         '/anime-list',
       ],
-      documentation: 'DOCS_LINK/#tag/gogoanime',
+      documentation: 'https://animetize-docs.vercel.app',
     });
   });
 
@@ -31,7 +31,6 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
     const page = (request.query as { page: number }).page || 1;
 
     const res = await gogoanime.search(query, page);
-
 
     reply.status(200).send(res);
   });
@@ -42,7 +41,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
     try {
       const res = await gogoanime
         .fetchAnimeInfo(id)
-        .catch((err:any) => reply.status(404).send({ message: err }));
+        .catch((err: any) => reply.status(404).send({ message: err }));
 
       reply.status(200).send(res);
     } catch (err) {
@@ -59,7 +58,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
     try {
       const res = await gogoanime
         .fetchGenreInfo(genre, page)
-        .catch((err:any) => reply.status(404).send({ message: err }));
+        .catch((err: any) => reply.status(404).send({ message: err }));
       reply.status(200).send(res);
     } catch {
       reply
@@ -72,7 +71,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
     try {
       const res = await gogoanime
         .fetchGenreList()
-        .catch((err:any) => reply.status(404).send({ message: err }));
+        .catch((err: any) => reply.status(404).send({ message: err }));
       reply.status(200).send(res);
     } catch {
       reply

@@ -1,5 +1,4 @@
 import { VideoExtractor, IVideo } from '../models';
-import { USER_AGENT } from '../utils';
 
 class StreamSB extends VideoExtractor {
   protected override serverName = 'streamsb';
@@ -15,7 +14,8 @@ class StreamSB extends VideoExtractor {
   override extract = async (videoUrl: URL, isAlt: boolean = false): Promise<IVideo[]> => {
     let headers: any = {
       watchsb: 'sbstream',
-      'User-Agent': USER_AGENT,
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
       Referer: videoUrl.href,
     };
     let id = videoUrl.href.split('/e/').pop();
@@ -31,7 +31,8 @@ class StreamSB extends VideoExtractor {
     if (!res?.data.stream_data) throw new Error('No source found. Try a different server.');
 
     headers = {
-      'User-Agent': USER_AGENT,
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
       Referer: videoUrl.href.split('e/')[0],
     };
     const m3u8Urls = await this.client.get(res.data.stream_data.file, {
