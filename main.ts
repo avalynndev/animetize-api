@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import FastifyCors from '@fastify/cors';
-
+import Redis from 'ioredis';
 import gogoanime from './routes';
 import chalk from 'chalk';
 
@@ -8,6 +8,14 @@ const fastify = Fastify({
   maxParamLength: 1000,
   logger: true,
 });
+
+export const redis =
+  process.env.REDIS_HOST &&
+  new Redis({
+    host: process.env.REDIS_HOST,
+    port: Number(process.env.REDIS_PORT),
+    password: process.env.REDIS_PASSWORD,
+  });
 
 (async () => {
   const PORT = 3000;
@@ -18,6 +26,8 @@ const fastify = Fastify({
   });
 
   console.log(chalk.green(`Starting server on port ${PORT}... 🚀`));
+  if (!process.env.REDIS_HOST)
+    console.warn(chalk.yellowBright('Redis not found. Cache disabled.'));
 
   await fastify.register(gogoanime, { prefix: '/' });
   

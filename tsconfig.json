@@ -3,7 +3,7 @@
     "target": "es2016",
     "module": "commonjs",
     "paths": {
-      "*": ["./node_modules/*", "./src/types/*"]
+      "*": ["./node_modules/*", "./types/*"]
     },                                     
 
     "outDir": "dist",
@@ -14,7 +14,7 @@
 
   },
   "include": [
-    "src/**/*.ts",
+    "**/*.ts", "main.ts", "scrapper.ts",
   ],
   "exclude": [
     "node_modules",
