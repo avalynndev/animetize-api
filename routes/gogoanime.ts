@@ -27,7 +27,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
         '/recent-episodes',
         '/anime-list',
       ],
-      documentation: 'https://docs.consumet.org/#tag/gogoanime',
+      documentation: 'https://animetize-docs.vercel.app/',
     });
   });
 
