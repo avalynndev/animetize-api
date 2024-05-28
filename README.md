@@ -49,7 +49,7 @@ Host your own instance of Animetize API on Render using the button below.
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/avalynndev/animetize-api)
 
 ## Documentation
-Please refer to the [documentation](). Join our [Discord server]() if you need any additional help or have any questions, comments, or suggestions.
+Please refer to the [documentation](https://animetize-docs.vercel.app/). If you need any additional help or have any questions, comments, or suggestions, just create a new issue and tag it as "help".
 
 ## Development
 Pull requests and stars are always welcome, for bugs and features create a new [issue](https://github.com/avalynndev/animetize-api/issues).
