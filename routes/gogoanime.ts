@@ -26,6 +26,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
         '/popular',
         '/recent-episodes',
         '/anime-list',
+        '/download',
       ],
       documentation: 'https://animetize-docs.vercel.app/',
     });
