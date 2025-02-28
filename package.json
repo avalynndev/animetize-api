@@ -9,7 +9,7 @@
         "lint": "prettier --write \"**/*.ts\""
     },
     "dependencies": {
-        "@fastify/cors": "^10.0.0",
+        "@fastify/cors": "^11.0.0",
         "@types/fastify-cors": "^2.1.0",
         "@types/node": "^22.0.0",
         "@types/ws": "^8.5.3",
