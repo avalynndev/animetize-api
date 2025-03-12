@@ -1,7 +1,10 @@
 ![bannner.png](https://raw.githubusercontent.com/animetize/animetize-api/main/Animetize_banner.png)
 -------
 <p align="center">
- An API to effortlessly access information on anime from gogoanime website.
+  An API to effortlessly access information on anime from gogoanime website.
+</p> 
+<p align="center">  
+  ‼️<b> This API has been discontinued as the gogoanime website has been takendown. </b>‼️
 </p>
 
 <h2> Table of Contents </h2>
